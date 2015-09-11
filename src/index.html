@@ -105,6 +105,7 @@
                 </section>
                 <section>
                     <h2>Promises</h2>
+                    <p>A great way to do asynchornous programming avoiding callbacks. Now part of the language itself!</p>
                 </section>
                 <section>
                     <section>
@@ -225,10 +226,35 @@ var {size, colour, madeOf} = getThing();
                     </ul>
                 </section>
                 <section>
-                    <h2>Iterators/generators</h2>
+                    <h2>Iterators and generators</h2>
+                    <section>
+                      <p>Similar to IEnumerable and IEnumerator in C#, lazy loading, <pre><code>.next()</code></pre></p>
+                      <p>Comes with a new syntax <pre><code>for(_variable of _iterable)</code></pre>
+                    </section>
+                    <section>
+                      <p>Generators are (one of) the easiest ways to create an iterator.</p>
+<pre><code>function myGenerator() {
+  for (var i = 0; i < 3; i++)
+    yield i * 2;
+}
+
+var g = myGenerator();
+g.next(); // returns 0
+g.next(); // returns 2
+g.next(); // returns 4
+g.next(); // throws StopIteration
+</code></pre>
+                    </section>
                 </section>
                 <section>
                     <h2>Symbols</h2>
+                    <p>Allows us to have immutable and unique identifiers based off of anything (including objects)</p>
+                    <pre><code>var foo = {a:1};
+var sym = Symbol(foo);
+var bar = {
+  [sym]: 'a'
+};                      
+                    </code></pre>
                 </section>
                 <section>
                     <h2>Maps and Sets</h2>
@@ -281,6 +307,9 @@ var {size, colour, madeOf} = getThing();
                         <li><a href="https://kangax.github.io/compat-table/es6/">Transpiler/browser compatibility</a></li>
                         <li><a href="http://www.2ality.com/2015/08/getting-started-es6.html">Decent ES6 getting started post</a></li>
                         <li><a href="https://github.com/lukehoban/es6features">ES6 feature set</a></li>
+                        <li><a href="https://github.com/owencraig/es2015-and-beyond-presentation">Slides Source</a></li>
+                        <li><a href="es2015-and-beyond-presentation.owencraig.com">Slides Hosted</a></li>
+                        <li><a href="https://github.com/astarkston/es6bff">Examples (Work in Progress)</a></li>
                         
                 </section>
             </div>
