@@ -8,14 +8,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jorupp/angular-intro.git"
+    "url": "https://github.com/owencraig/es2015-and-beyond-presentation.git"
   },
-  "author": "",
+  "author": [
+    "Owen Craig <owen@owencraig.com>",
+    "Aaron Starkston <astarkston@rightpoint.com>"
+  ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jorupp/angular-intro/issues"
+    "url": "https://github.com/owencraig/es2015-and-beyond-presentation/issues"
   },
-  "homepage": "https://github.com/jorupp/angular-intro",
+  "homepage": "https://github.com/owencraig/es2015-and-beyond-presentation",
   "devDependencies": {
     "event-stream": "^3.3.1",
     "gulp": "^3.8.11",
