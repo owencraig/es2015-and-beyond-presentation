@@ -28,7 +28,7 @@
                 <section>
                     <section>
                         <h2>How do we get started?</h2>
-                        <p>For places where supprt is limited, use a transpiler</p>
+                        <p>For places where support is limited, use a transpiler</p>
                         <ul>
                             <li>Babel [<a href="https://babeljs.io/">https://babeljs.io/</a>]</li>
                             <li>Traceur [<a href="https://github.com/google/traceur-compiler">https://github.com/google/traceur-compiler</a>]</li>
@@ -88,11 +88,11 @@ str = 'hey there!'; // valid
                         <li>Use const for things that are completely immutable (exception: mutable objects are okay)</li>
                         <li>Use let for mutable things</li>
                         <li>const means the variable always has the same value, aka it can be a mutable object</li>
-                        <li>Both have a temporal dead zone (different hoisting than )
+                        <li>Both have a temporal dead zone (different hoisting than var)
                     </ul>
                 </section>
                 <section>
-                    <h2>Fat Arrow</h2>
+                    <h2>Arrow Syntax</h2>
                     <pre class="pull-left custom-pre">
                         <code>
 let total = someArray.map(x => x + x);
@@ -278,8 +278,9 @@ console.log(set);
                 </section>
                 <section>
                     <h2>Tail Calls</h2>
-                    <pre class="pull-left custom-pre">
-                        <code>
+                    <section>
+                        <pre>
+                            <code>
 let someItem = 4;
 function getId(id) {
     return id;
@@ -288,18 +289,21 @@ function process(item) {
     let newItem = item + 1;
     return getId(newItem);
 }
-
 console.log(process(someItem));
 
-const andOp = () => process(someItem) && getId(someItem); // getId() is tail recursion
-const orOp = () => process(someItem) || getId(someItem); // getId() is tail recursion
-                        </code>
-                    </pre>
-                    <ul class="pull-left custom-list">
-                        <li>Any tail calls are optimized by ES2015 (doesn't matter how they're called)</li>
-                        <li>Tail call optimization prevents getId() from having a new stack created</li>
-                        <li>Unfortunately, this doesn't matter if we transpile for backwards compatibility</li>
-                    </ul>
+// getId() is tail recursion for && and ||
+const andOp = () => process(someItem) && getId(someItem); 
+const orOp = () => process(someItem) || getId(someItem); 
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <ul>
+                            <li>Any tail calls are optimized by ES2015 (doesn't matter how they're called)</li>
+                            <li>Tail call optimization prevents getId() from having a new stack created</li>
+                            <li>Unfortunately, this doesn't matter if we transpile for backwards compatibility</li>
+                        </ul>
+                    </section>
                 </section>
                 <section>
                     <h3>Resources</h3>
@@ -311,7 +315,6 @@ const orOp = () => process(someItem) || getId(someItem); // getId() is tail recu
                         <li><a href="https://github.com/owencraig/es2015-and-beyond-presentation">Slides Source</a></li>
                         <li><a href="es2015-and-beyond-presentation.owencraig.com">Slides Hosted</a></li>
                         <li><a href="https://github.com/astarkston/es6bff">Examples (Work in Progress)</a></li>
-                        
                 </section>
             </div>
         </div>
