@@ -67,10 +67,41 @@
                 </section>
                 <section>
                     <h2>New scoping</h2>
-                    <p>(Let/Var)</p>
+                    <code>
+                        <pre>
+                        const myConstStr = 'Hello';
+                        let favoriteNumber = 2;
+
+                        // hoisting
+                        str = 'greetings!'; // error
+                        otherStr = 'whats up?'; // valid
+
+                        let str;
+                        var otherStr;
+                        console.log(str); // undefined
+                        str = 'hey there!'; // valid
+                        </pre>
+                    </code>
+                    <ul>
+                        <li>let and const are transpiled to _var</li>
+                        <li>Use const for things that are completely immutable (exception: mutable objects are okay)</li>
+                        <li>Use let for mutable things</li>
+                        <li>const means the variable always has the same value, aka it can be a mutable object</li>
+                        <li>Both have a temporal dead zone (different hoisting than )
+                    </ul>
                 </section>
                 <section>
                     <h2>Fat Arrow</h2>
+                    <code>
+                        <pre>
+                        let total = someArray.map(x => x + x);
+                        </pre>
+                    </code>
+                    <ul>
+                        <li>Similar in syntax to lambdas in C#</li>
+                        <li>Share the same lexical this as surrounding code</li>
+                        <li>Arrows work in block scopes (e.g. event listeners) and expressions (e.g. array.map())</li>
+                    </ul>
                 </section>
                 <section>
                     <h2>Promises</h2>
@@ -150,9 +181,48 @@ var {size, colour, madeOf} = getThing();
                 </section>
                 <section>
                     <h2>Classes</h2>
+                    <code>
+                        <pre>
+                        class Employee {
+                            constructor(name, job) {
+                                this.name = name;
+                                this.job = job;
+                            }
+                            static staticMethod() {}
+                            doStuff() {}
+                        }
+                        </pre>
+                    </code>
+                    <p>Classes may look like objects, but are actually functions</p>
+                    <ul>
+                        <li>Static methods are attached to the class (Employee.staticMethod())</li>
+                        <li>Prototype methods are attached to the prototype (Employee.prototype.doStuff())</li>
+                        <li>Sublcassing is supported without a plugin</li>
+                        <li>Classes in ES6 can make type checking so much simpler (for the future or other type-checking tools)</li>
+                    </ul>
                 </section>
                 <section>
                     <h2>Modules</h2>
+                    <code>
+                        <pre>
+                        /* module.js */
+                        export let myNumber = 2;
+
+                        export function increaseNumber() {
+                            myNumber++;
+                        }
+                        /* main.js */
+                        import * as myModule from '/src/modules/namedModule'
+                        myModule.increaseNumber();
+                        </pre>
+                    </code>
+                    <ul>
+                        <li>One module per file</li>
+                        <li>Use keyword <code>export</code> to export, <code>import</code> to import</li>
+                        <li>Two ways to export modules: named modules or default modules</li>
+                        <li>Modules are "asynchronous" because they are loaded at runtime</li>
+                        <li>Modules can be imported via relative (../module) or absolute (/src/modules/module) paths</li>
+                    </ul>
                 </section>
                 <section>
                     <h2>Iterators/generators</h2>
@@ -162,12 +232,56 @@ var {size, colour, madeOf} = getThing();
                 </section>
                 <section>
                     <h2>Maps and Sets</h2>
+                    <code>
+                        <pre>
+                        let myMap = new Map();
+                        myMap.set('company', 'rightpoint');
+                        myMap.set('color', 'orange');
+
+                        let set = new Set();
+                        set.add('my value');
+                        console.log(set);
+                        </pre>
+                    </code>
+                    <ul>
+                        <li>A set is an ordered list of unique values</li>
+                        <li>A map is similar to a set, except it is a [key, value] data structure</li>
+                        <li><code>new Set()</code> takes 0 or 1 argument, but the argument must be iterable, i.e. an array</li>
+                    </ul>
                 </section>
                 <section>
                     <h2>Tail Calls</h2>
+                    <code>
+                        <pre>
+                        let someItem = 4;
+                        function getId(id) {
+                            return id;
+                        }
+                        function process(item) {
+                            let newItem = item + 1;
+                            return getId(newItem);
+                        }
+
+                        console.log(process(someItem));
+
+                        const andOp = () => process(someItem) && getId(someItem); // getId() is tail recursion
+                        const orOp = () => process(someItem) || getId(someItem); // getId() is tail recursion
+                        </pre>
+                    </code>
+                    <ul>
+                        <li>Any tail calls are optimized by ES2015 (doesn't matter how they're called)</li>
+                        <li>Tail call optimization prevents getId() from having a new stack created</li>
+                        <li>Unfortunately, this doesn't matter if we transpile for backwards compatibility</li>
+                    </ul>
                 </section>
                 <section>
                     <h3>Resources</h3>
+                    <ul>
+                        <li><a href="http://exploringjs.com/es6/">ExploringJS: deep dive</a></li>
+                        <li><a href="https://kangax.github.io/compat-table/es6/">Transpiler/browser compatibility</a></li>
+                        <li><a href="http://www.2ality.com/2015/08/getting-started-es6.html">Decent ES6 getting started post</a></li>
+                        <li><a href="https://github.com/lukehoban/es6features">ES6 feature set</a></li>
+                        
                 </section>
             </div>
         </div>
