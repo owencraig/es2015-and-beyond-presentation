@@ -66,22 +66,23 @@
                 </section>
                 <section>
                     <h2>New scoping</h2>
-                    <code>
-                        <pre>
-                        const myConstStr = 'Hello';
-                        let favoriteNumber = 2;
+                    <p class="pull-left"><code>let</code> and <code>const</code> are better versions of <code>var</code></p>
+                    <pre class="pull-left custom-pre">
+                        <code>
+const myConstStr = 'Hello';
+let favoriteNumber = 2;
 
-                        // hoisting
-                        str = 'greetings!'; // error
-                        otherStr = 'whats up?'; // valid
+// hoisting
+str = 'greetings!'; // error
+otherStr = 'whats up?'; // valid
 
-                        let str;
-                        var otherStr;
-                        console.log(str); // undefined
-                        str = 'hey there!'; // valid
-                        </pre>
-                    </code>
-                    <ul>
+let str;
+var otherStr;
+console.log(str); // undefined
+str = 'hey there!'; // valid
+                        </code>
+                    </pre>
+                    <ul class="pull-left custom-list">
                         <li>let and const are transpiled to _var</li>
                         <li>Use const for things that are completely immutable (exception: mutable objects are okay)</li>
                         <li>Use let for mutable things</li>
@@ -91,12 +92,12 @@
                 </section>
                 <section>
                     <h2>Fat Arrow</h2>
-                    <code>
-                        <pre>
-                        let total = someArray.map(x => x + x);
-                        </pre>
-                    </code>
-                    <ul>
+                    <pre class="pull-left custom-pre">
+                        <code>
+let total = someArray.map(x => x + x);
+                        </code>
+                    </pre>
+                    <ul class="pull-left custom-list">
                         <li>Similar in syntax to lambdas in C#</li>
                         <li>Share the same lexical this as surrounding code</li>
                         <li>Arrows work in block scopes (e.g. event listeners) and expressions (e.g. array.map())</li>
@@ -110,20 +111,20 @@
                 </section>
                 <section>
                     <h2>Classes</h2>
-                    <code>
-                        <pre>
-                        class Employee {
-                            constructor(name, job) {
-                                this.name = name;
-                                this.job = job;
-                            }
-                            static staticMethod() {}
-                            doStuff() {}
-                        }
-                        </pre>
-                    </code>
                     <p>Classes may look like objects, but are actually functions</p>
-                    <ul>
+                    <pre class="pull-left custom-pre">
+                        <code>
+class Employee {
+    constructor(name, job) {
+        this.name = name;
+        this.job = job;
+    }
+    static staticMethod() {}
+    doStuff() {}
+}
+                        </code>
+                    </pre>
+                    <ul class="pull-left custom-list">
                         <li>Static methods are attached to the class (Employee.staticMethod())</li>
                         <li>Prototype methods are attached to the prototype (Employee.prototype.doStuff())</li>
                         <li>Sublcassing is supported without a plugin</li>
@@ -132,20 +133,20 @@
                 </section>
                 <section>
                     <h2>Modules</h2>
-                    <code>
-                        <pre>
-                        /* module.js */
-                        export let myNumber = 2;
+                    <pre class="pull-left custom-pre" style="width: 65%;">
+                        <code>
+/* module.js */
+export let myNumber = 2;
 
-                        export function increaseNumber() {
-                            myNumber++;
-                        }
-                        /* main.js */
-                        import * as myModule from '/src/modules/namedModule'
-                        myModule.increaseNumber();
-                        </pre>
-                    </code>
-                    <ul>
+export function increaseNumber() {
+    myNumber++;
+}
+/* main.js */
+import * as myModule from '/src/modules/namedModule'
+myModule.increaseNumber();
+                        </code>
+                    </pre>
+                    <ul class="pull-left custom-list" style="width: 31%;">
                         <li>One module per file</li>
                         <li>Use keyword <code>export</code> to export, <code>import</code> to import</li>
                         <li>Two ways to export modules: named modules or default modules</li>
@@ -161,18 +162,18 @@
                 </section>
                 <section>
                     <h2>Maps and Sets</h2>
-                    <code>
-                        <pre>
-                        let myMap = new Map();
-                        myMap.set('company', 'rightpoint');
-                        myMap.set('color', 'orange');
+                    <pre class="pull-left custom-pre">
+                        <code>
+let myMap = new Map();
+myMap.set('company', 'rightpoint');
+myMap.set('color', 'orange');
 
-                        let set = new Set();
-                        set.add('my value');
-                        console.log(set);
-                        </pre>
-                    </code>
-                    <ul>
+let set = new Set();
+set.add('my value');
+console.log(set);
+                        </code>
+                    </pre>
+                    <ul class="pull-left custom-list">
                         <li>A set is an ordered list of unique values</li>
                         <li>A map is similar to a set, except it is a [key, value] data structure</li>
                         <li><code>new Set()</code> takes 0 or 1 argument, but the argument must be iterable, i.e. an array</li>
@@ -180,24 +181,24 @@
                 </section>
                 <section>
                     <h2>Tail Calls</h2>
-                    <code>
-                        <pre>
-                        let someItem = 4;
-                        function getId(id) {
-                            return id;
-                        }
-                        function process(item) {
-                            let newItem = item + 1;
-                            return getId(newItem);
-                        }
+                    <pre class="pull-left custom-pre">
+                        <code>
+let someItem = 4;
+function getId(id) {
+    return id;
+}
+function process(item) {
+    let newItem = item + 1;
+    return getId(newItem);
+}
 
-                        console.log(process(someItem));
+console.log(process(someItem));
 
-                        const andOp = () => process(someItem) && getId(someItem); // getId() is tail recursion
-                        const orOp = () => process(someItem) || getId(someItem); // getId() is tail recursion
-                        </pre>
-                    </code>
-                    <ul>
+const andOp = () => process(someItem) && getId(someItem); // getId() is tail recursion
+const orOp = () => process(someItem) || getId(someItem); // getId() is tail recursion
+                        </code>
+                    </pre>
+                    <ul class="pull-left custom-list">
                         <li>Any tail calls are optimized by ES2015 (doesn't matter how they're called)</li>
                         <li>Tail call optimization prevents getId() from having a new stack created</li>
                         <li>Unfortunately, this doesn't matter if we transpile for backwards compatibility</li>
