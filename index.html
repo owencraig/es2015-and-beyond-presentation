@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ES2015 and Beyond</title>
+        <!-- bower:css -->
+        <link rel="stylesheet" href="../bower_components/reveal.js/css/reveal.css" />
+        <link rel="stylesheet" href="../bower_components/reveal.js/lib/css/zenburn.css" />
+        <!-- endbower -->
+        <!-- inject:css -->
+        <link rel="stylesheet" href="/styles/theme.css">
+        <!-- endinject -->
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section data-markdown>
+                    <h1>Some nerdy javascript stuff</h1>
+                    <p>ES2015 And Beyond</p>
+                    <img src="resources/es_logo.svg" style="width:50%"/>
+                </section>
+                <section>
+                    <h2>ES2015... What?</h2>
+                    <ul>
+                        <li>The next version of javascript</li>
+                        <li>ES2015 and ES6 are the same thing</li>
+                    </ul>
+                </section>
+                <section>
+                    <section>
+                        <h2>How do we get started?</h2>
+                        <p>For places where support is limited, use a transpiler</p>
+                        <ul>
+                            <li>Babel [<a href="https://babeljs.io/">https://babeljs.io/</a>]</li>
+                            <li>Traceur [<a href="https://github.com/google/traceur-compiler">https://github.com/google/traceur-compiler</a>]</li>
+                            <li>Typescript [<a href="http://www.typescriptlang.org/">http://www.typescriptlang.org/</a>]</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>In node 0.x, io.js < 3.x</h2>
+                        <p>Some compatibility out of the box, others with running node with the <code>--harmony</code> flag enabled</p>
+                    </section>
+                    <section>
+                        <h2>In Node 4.0</h2>
+                        <p>most of the spec is now covered out of the box, no runtime flags enabled [<a href="https://nodejs.org/en/docs/es6/">https://nodejs.org/en/docs/es6/</a>]</p>
+                    </section>
+                    <section>
+                        <h2>In browsers - on the fly</h2>
+                        <p>Include some scripts on your page and it'll transpile them. Magic and super easy... not so good for production</p>
+                        <ul>
+                            <li>Babel</li>
+                            <li>Traceur</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>In browsers - pre compiled</h2>
+                        <p>As part of your build system, include your transpiler of choice as one of the build steps</p>
+                        <ul>
+                            <li>Babel</li>
+                            <li>Traceur</li>
+                            <li>Typescript</li>
+                        </ul>
+                        <p> An example in our repo: <a href="https://github.com/astarkston/es6bff/">https://github.com/astarkston/es6bff/</a></p>
+                    </section>
+                </section>
+                <section>
+                    <h2>Features</h2>
+                </section>
+                <section>
+                    <h2>New scoping</h2>
+                    <p class="pull-left"><code>let</code> and <code>const</code> are better versions of <code>var</code></p>
+                    <pre class="pull-left custom-pre">
+                        <code>
+const myConstStr = 'Hello';
+let favoriteNumber = 2;
+
+// hoisting
+str = 'greetings!'; // error
+otherStr = 'whats up?'; // valid
+
+let str;
+var otherStr;
+console.log(str); // undefined
+str = 'hey there!'; // valid
+                        </code>
+                    </pre>
+                    <ul class="pull-left custom-list">
+                        <li>let and const are transpiled to _var</li>
+                        <li>Use const for things that are completely immutable (exception: mutable objects are okay)</li>
+                        <li>Use let for mutable things</li>
+                        <li>const means the variable always has the same value, aka it can be a mutable object</li>
+                        <li>Both have a temporal dead zone (different hoisting than var)
+                    </ul>
+                </section>
+                <section>
+                    <h2>Arrow Syntax</h2>
+                    <pre class="pull-left custom-pre">
+                        <code>
+let total = someArray.map(x => x + x);
+                        </code>
+                    </pre>
+                    <ul class="pull-left custom-list">
+                        <li>Similar in syntax to lambdas in C#</li>
+                        <li>Share the same lexical this as surrounding code</li>
+                        <li>Arrows work in block scopes (e.g. event listeners) and expressions (e.g. array.map())</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Promises</h2>
+                    <p>A great way to do asynchornous programming avoiding callbacks. Now part of the language itself!</p>
+                </section>
+                <section>
+                    <section>
+                        <h3>Default parameters</h3>
+                        <p>No more of this:
+<pre><code>function doStuff(thingo){
+  thingo = thingo || 0;
+  // etc
+}
+</code></pre>
+                        <div class="fragment"><p>It's now just:</p>
+<pre><code>function doStuff(thingo = 0){
+  // etc
+}
+</code></pre>
+                        </div>
+                        <div class="fragment">
+                            <p>Or Even:</p>
+<pre><code>function doStuff(thingo = getDefault()){
+  // etc
+}
+</code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>Rest Parameters</h3>
+                        <p>No More:</p>
+<pre><code>function x (a, b){
+  var otherArgs = Array.prototype.slice.call(arguments).slice(2);
+    // do something with otherArgs
+}
+</code></pre>
+                        <div class="fragment"><p>It's now just:</p>
+<pre><code>function x2(a, b, ...otherArgs){
+  // do something with otherArgs
+}
+</code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>Destructuring</h3>
+                        <p>Can break down objects or arrays</p>
+<pre><code>function getThing(){
+  return {
+    size: 'large',
+    colour: 'orange',
+    madeOf: 'stone?',
+    disposition: 'mainly grumpy'
+  };
+}
+
+var {size, colour, madeOf} = getThing();
+</code></pre>
+                        <div class="fragment"><p>combined with rest params we can get some really nice recursion happening</p>
+<pre><code>function printArray([head, ...tail]){
+  console.log(head);
+  if(tail.length){
+    printArray(tail);
+  }
+}</code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>Spread</h3>
+                        <p>Takes an array and turns it into a parameter list</p>
+                        <p>No More:</p>
+<pre><code>Math.max.apply(null, [180,-20,5,16]);
+</code></pre>
+                        <div class="fragment"><p>With Spread it becomes:</p>
+<pre><code>Math.max(...[180,-20,5,16]);
+</code></pre>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <h2>Classes</h2>
+                    <p>Classes may look like objects, but are actually functions</p>
+                    <pre class="pull-left custom-pre">
+                        <code>
+class Employee {
+    constructor(name, job) {
+        this.name = name;
+        this.job = job;
+    }
+    static staticMethod() {}
+    doStuff() {}
+}
+                        </code>
+                    </pre>
+                    <ul class="pull-left custom-list">
+                        <li>Static methods are attached to the class (Employee.staticMethod())</li>
+                        <li>Prototype methods are attached to the prototype (Employee.prototype.doStuff())</li>
+                        <li>Sublcassing is supported without a plugin</li>
+                        <li>Classes in ES6 can make type checking so much simpler (for the future or other type-checking tools)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Modules</h2>
+                    <pre class="pull-left custom-pre" style="width: 65%;">
+                        <code>
+/* module.js */
+export let myNumber = 2;
+
+export function increaseNumber() {
+    myNumber++;
+}
+/* main.js */
+import * as myModule from '/src/modules/namedModule'
+myModule.increaseNumber();
+                        </code>
+                    </pre>
+                    <ul class="pull-left custom-list" style="width: 31%;">
+                        <li>One module per file</li>
+                        <li>Use keyword <code>export</code> to export, <code>import</code> to import</li>
+                        <li>Two ways to export modules: named modules or default modules</li>
+                        <li>Modules are "asynchronous" because they are loaded at runtime</li>
+                        <li>Modules can be imported via relative (../module) or absolute (/src/modules/module) paths</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Iterators and generators</h2>
+                    <section>
+                      <p>Similar to IEnumerable and IEnumerator in C#, lazy loading, <pre><code>.next()</code></pre></p>
+                      <p>Comes with a new syntax <pre><code>for(_variable of _iterable)</code></pre>
+                    </section>
+                    <section>
+                      <p>Generators are (one of) the easiest ways to create an iterator.</p>
+<pre><code>function myGenerator() {
+  for (var i = 0; i < 3; i++)
+    yield i * 2;
+}
+
+var g = myGenerator();
+g.next(); // returns 0
+g.next(); // returns 2
+g.next(); // returns 4
+g.next(); // throws StopIteration
+</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <h2>Symbols</h2>
+                    <p>Allows us to have immutable and unique identifiers based off of anything (including objects)</p>
+                    <pre><code>var foo = {a:1};
+var sym = Symbol(foo);
+var bar = {
+  [sym]: 'a'
+};                      
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>Maps and Sets</h2>
+                    <pre class="pull-left custom-pre">
+                        <code>
+let myMap = new Map();
+myMap.set('company', 'rightpoint');
+myMap.set('color', 'orange');
+
+let set = new Set();
+set.add('my value');
+console.log(set);
+                        </code>
+                    </pre>
+                    <ul class="pull-left custom-list">
+                        <li>A set is an ordered list of unique values</li>
+                        <li>A map is similar to a set, except it is a [key, value] data structure</li>
+                        <li><code>new Set()</code> takes 0 or 1 argument, but the argument must be iterable, i.e. an array</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Tail Calls</h2>
+                    <section>
+                        <pre>
+                            <code>
+let someItem = 4;
+function getId(id) {
+    return id;
+}
+function process(item) {
+    let newItem = item + 1;
+    return getId(newItem);
+}
+console.log(process(someItem));
+
+// getId() is tail recursion for && and ||
+const andOp = () => process(someItem) && getId(someItem); 
+const orOp = () => process(someItem) || getId(someItem); 
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <ul>
+                            <li>Any tail calls are optimized by ES2015 (doesn't matter how they're called)</li>
+                            <li>Tail call optimization prevents getId() from having a new stack created</li>
+                            <li>Unfortunately, this doesn't matter if we transpile for backwards compatibility</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="http://exploringjs.com/es6/">ExploringJS: deep dive</a></li>
+                        <li><a href="https://kangax.github.io/compat-table/es6/">Transpiler/browser compatibility</a></li>
+                        <li><a href="http://www.2ality.com/2015/08/getting-started-es6.html">Decent ES6 getting started post</a></li>
+                        <li><a href="https://github.com/lukehoban/es6features">ES6 feature set</a></li>
+                        <li><a href="https://github.com/owencraig/es2015-and-beyond-presentation">Slides Source</a></li>
+                        <li><a href="es2015-and-beyond-presentation.owencraig.com">Slides Hosted</a></li>
+                        <li><a href="https://github.com/astarkston/es6bff">Examples (Work in Progress)</a></li>
+                </section>
+            </div>
+        </div>
+        <!-- bower:js -->
+        <script src="../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../bower_components/reveal.js/js/reveal.js"></script>
+        <script src="../bower_components/reveal.js/plugin/highlight/highlight.js"></script>
+        <script src="../bower_components/reveal.js/plugin/zoom-js/zoom.js"></script>
+        <!-- endbower -->
+        <!-- inject:js -->
+        <!-- endinject -->
+        <script>
+                            Reveal.initialize({
+                            transition: 'concave',
+                            progress: true,
+                            history: true
+                            });
+                            hljs.initHighlightingOnLoad();
+        </script>
+    </body>
+</html>
