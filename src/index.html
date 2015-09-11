@@ -21,46 +21,47 @@
                 <section>
                     <h2>ES2015... What?</h2>
                     <ul>
-                      <li>The next version of javascript</li>
-                      <li>ES2015 and ES6 are the same thing</li>
+                        <li>The next version of javascript</li>
+                        <li>ES2015 and ES6 are the same thing</li>
                     </ul>
                 </section>
-
                 <section>
                     <section>
                         <h2>How do we get started?</h2>
                         <p>For places where supprt is limited, use a transpiler</p>
                         <ul>
-                          <li>Babel [<a href="https://babeljs.io/">https://babeljs.io/</a>]</li>
-                          <li>Traceur [<a href="https://github.com/google/traceur-compiler">https://github.com/google/traceur-compiler</a>]</li>
-                          <li>Typescript [<a href="http://www.typescriptlang.org/">http://www.typescriptlang.org/</a>]</li>
+                            <li>Babel [<a href="https://babeljs.io/">https://babeljs.io/</a>]</li>
+                            <li>Traceur [<a href="https://github.com/google/traceur-compiler">https://github.com/google/traceur-compiler</a>]</li>
+                            <li>Typescript [<a href="http://www.typescriptlang.org/">http://www.typescriptlang.org/</a>]</li>
                         </ul>
                     </section>
                     <section>
-                        <p>In node 0.x, io.js < 3.x</p>
+                        <h2>In node 0.x, io.js < 3.x</h2>
+                        <p>Some compatibility out of the box, others with running node with the <code>--harmony</code> flag enabled</p>
                     </section>
                     <section>
-                        <p>In Node 4.0</p>
+                        <h2>In Node 4.0</h2>
+                        <p>most of the spec is now covered out of the box, no runtime flags enabled [<a href="https://nodejs.org/en/docs/es6/">https://nodejs.org/en/docs/es6/</a>]</p>
                     </section>
                     <section>
                         <h2>In browsers - on the fly</h2>
                         <p>Include some scripts on your page and it'll transpile them. Magic and super easy... not so good for production</p>
                         <ul>
-                          <li>Babel</li>
-                          <li>Traceur</li>
+                            <li>Babel</li>
+                            <li>Traceur</li>
                         </ul>
                     </section>
                     <section>
-                      <h2>In browsers - pre compiled</h2>
-                      <p>As part of your build system, include your transpiler of choice as one of the build steps</p>
-                      <ul>
-                        <li>Babel</li>
-                        <li>Traceur</li>
-                        <li>Typescript</li>
-                      </ul>
+                        <h2>In browsers - pre compiled</h2>
+                        <p>As part of your build system, include your transpiler of choice as one of the build steps</p>
+                        <ul>
+                            <li>Babel</li>
+                            <li>Traceur</li>
+                            <li>Typescript</li>
+                        </ul>
+                        <p> An example in our repo: <a href="https://github.com/astarkston/es6bff/">https://github.com/astarkston/es6bff/</a></p>
                     </section>
                 </section>
-
                 <section>
                     <h2>Features</h2>
                 </section>
@@ -105,9 +106,80 @@ let total = someArray.map(x => x + x);
                 </section>
                 <section>
                     <h2>Promises</h2>
+                    <p>A great way to do asynchornous programming avoiding callbacks. Now part of the language itself!</p>
                 </section>
                 <section>
-                    <h2>Rest/Spread/Destructuring</h2>
+                    <section>
+                        <h3>Default parameters</h3>
+                        <p>No more of this:
+<pre><code>function doStuff(thingo){
+  thingo = thingo || 0;
+  // etc
+}
+</code></pre>
+                        <div class="fragment"><p>It's now just:</p>
+<pre><code>function doStuff(thingo = 0){
+  // etc
+}
+</code></pre>
+                        </div>
+                        <div class="fragment">
+                            <p>Or Even:</p>
+<pre><code>function doStuff(thingo = getDefault()){
+  // etc
+}
+</code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>Rest Parameters</h3>
+                        <p>No More:</p>
+<pre><code>function x (a, b){
+  var otherArgs = Array.prototype.slice.call(arguments).slice(2);
+    // do something with otherArgs
+}
+</code></pre>
+                        <div class="fragment"><p>It's now just:</p>
+<pre><code>function x2(a, b, ...otherArgs){
+  // do something with otherArgs
+}
+</code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>Destructuring</h3>
+                        <p>Can break down objects or arrays</p>
+<pre><code>function getThing(){
+  return {
+    size: 'large',
+    colour: 'orange',
+    madeOf: 'stone?',
+    disposition: 'mainly grumpy'
+  };
+}
+
+var {size, colour, madeOf} = getThing();
+</code></pre>
+                        <div class="fragment"><p>combined with rest params we can get some really nice recursion happening</p>
+<pre><code>function printArray([head, ...tail]){
+  console.log(head);
+  if(tail.length){
+    printArray(tail);
+  }
+}</code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>Spread</h3>
+                        <p>Takes an array and turns it into a parameter list</p>
+                        <p>No More:</p>
+<pre><code>Math.max.apply(null, [180,-20,5,16]);
+</code></pre>
+                        <div class="fragment"><p>With Spread it becomes:</p>
+<pre><code>Math.max(...[180,-20,5,16]);
+</code></pre>
+                        </div>
+                    </section>
                 </section>
                 <section>
                     <h2>Classes</h2>
@@ -155,10 +227,35 @@ myModule.increaseNumber();
                     </ul>
                 </section>
                 <section>
-                    <h2>Iterators/generators</h2>
+                    <h2>Iterators and generators</h2>
+                    <section>
+                      <p>Similar to IEnumerable and IEnumerator in C#, lazy loading, <pre><code>.next()</code></pre></p>
+                      <p>Comes with a new syntax <pre><code>for(_variable of _iterable)</code></pre>
+                    </section>
+                    <section>
+                      <p>Generators are (one of) the easiest ways to create an iterator.</p>
+<pre><code>function myGenerator() {
+  for (var i = 0; i < 3; i++)
+    yield i * 2;
+}
+
+var g = myGenerator();
+g.next(); // returns 0
+g.next(); // returns 2
+g.next(); // returns 4
+g.next(); // throws StopIteration
+</code></pre>
+                    </section>
                 </section>
                 <section>
                     <h2>Symbols</h2>
+                    <p>Allows us to have immutable and unique identifiers based off of anything (including objects)</p>
+                    <pre><code>var foo = {a:1};
+var sym = Symbol(foo);
+var bar = {
+  [sym]: 'a'
+};                      
+                    </code></pre>
                 </section>
                 <section>
                     <h2>Maps and Sets</h2>
@@ -211,6 +308,9 @@ const orOp = () => process(someItem) || getId(someItem); // getId() is tail recu
                         <li><a href="https://kangax.github.io/compat-table/es6/">Transpiler/browser compatibility</a></li>
                         <li><a href="http://www.2ality.com/2015/08/getting-started-es6.html">Decent ES6 getting started post</a></li>
                         <li><a href="https://github.com/lukehoban/es6features">ES6 feature set</a></li>
+                        <li><a href="https://github.com/owencraig/es2015-and-beyond-presentation">Slides Source</a></li>
+                        <li><a href="es2015-and-beyond-presentation.owencraig.com">Slides Hosted</a></li>
+                        <li><a href="https://github.com/astarkston/es6bff">Examples (Work in Progress)</a></li>
                         
                 </section>
             </div>
@@ -219,14 +319,13 @@ const orOp = () => process(someItem) || getId(someItem); // getId() is tail recu
         <!-- endbower -->
         <!-- inject:js -->
         <!-- endinject -->
-
         <script>
-            Reveal.initialize({
-            transition: 'concave',
-            progress: true,
-            history: true
-            });
-            hljs.initHighlightingOnLoad();
+                            Reveal.initialize({
+                            transition: 'concave',
+                            progress: true,
+                            history: true
+                            });
+                            hljs.initHighlightingOnLoad();
         </script>
     </body>
 </html>
