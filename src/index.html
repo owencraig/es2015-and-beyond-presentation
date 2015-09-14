@@ -325,12 +325,15 @@ const orOp = () => process(someItem) || getId(someItem);
         <!-- inject:js -->
         <!-- endinject -->
         <script>
-                            Reveal.initialize({
-                            transition: 'concave',
-                            progress: true,
-                            history: true
-                            });
-                            hljs.initHighlightingOnLoad();
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            Reveal.initialize({
+                transition: 'concave',
+                progress: true,
+                history: true
+            });
+            hljs.initHighlightingOnLoad();
+        });
+                            
         </script>
     </body>
 </html>

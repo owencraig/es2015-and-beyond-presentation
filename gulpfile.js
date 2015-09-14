@@ -92,10 +92,10 @@ gulp.task('scripts-release', [], function() {
                 .pipe(sourcemaps.init()),
             r,
         ])
-            .pipe(concat('scripts.js'))
-            .pipe(uglify())
+            //.pipe(concat('scripts.js'))
+            //.pipe(uglify())
             .pipe(rev())
-            .pipe(sourcemaps.write('.'))
+            //.pipe(sourcemaps.write('.'))
             .pipe(gulp.dest('dist/scripts'))
     ]);
 });
@@ -135,7 +135,7 @@ gulp.task('index', ['scripts', 'styles', 'resources'], function() {
 gulp.task('index-release', ['scripts-release', 'styles-release', 'resources'], function() {
     return gulp.src(INDEX_SOURCE)
         .pipe(plumber())
-        .pipe(inject(gulp.src(['dist/scripts/**/scripts-*.js', 'dist/styles/**/styles-*.css'], { read: false}), { relative: true, ignorePath: '../dist/' }))
+        .pipe(inject(gulp.src(['dist/scripts/**/*.js', 'dist/styles/**/styles-*.css'], { read: false}), { relative: true, ignorePath: '../dist/' }))
         .pipe(gulp.dest('./dist'));
 });
 
