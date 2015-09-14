@@ -110,14 +110,15 @@ gulp.task('styles', [], function () {
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/styles'));
 });
+
 gulp.task('styles-release', [], function () {
     return merge([
-            styles(),
             gulp.src(wiredep().css)
-                .pipe(plumber())
+                .pipe(plumber()),
+            styles()
         ])
         .pipe(concat('styles.css'))
-        .pipe(minifyCss())
+        //.pipe(minifyCss())
         .pipe(rev())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist/styles'));
